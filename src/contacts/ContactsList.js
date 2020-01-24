@@ -67,14 +67,22 @@ function ContactList() {
     const API_URL = 'http://private-05627-frontendnewhire.apiary-mock.com/contact_list'
     const [data, setData] = useState({ hits: [] });
     useEffect(() => {
-        const getContacts = async () => {
-            const result = await axios(API_URL);
-            setData({ hits: result.data });
-        }
         getContacts()
     }, []);
-
-
+    const getContacts = async () => {
+        const result = await axios(API_URL);
+        setData({ hits: result.data });
+    }
+    const handleChange = (e) => {
+        let filter = e.target.value.toLowerCase()
+        const filteredContacts = data.hits.filter(contact => {
+            let name = contact.name.toLowerCase()
+            let email = contact.email ? contact.email.toLowerCase(): ""
+            console.log(filter.indexOf(name) >= 0)
+            return name.indexOf(filter) >= 0 || email.indexOf(filter) >= 0
+        })
+        console.log(filteredContacts)
+    }
     return (
         <div>
             <div className={classes.root}>
@@ -94,6 +102,7 @@ function ContactList() {
                                     input: classes.inputInput,
                                 }}
                                 inputProps={{ 'aria-label': 'search' }}
+                                onChange={handleChange}
                             />
                         </div>
                     </Toolbar>
@@ -101,13 +110,15 @@ function ContactList() {
             </div>
             <Container>
             <Grid
+            style={{ marginTop: 50 }}
                 container
                 direction="row"
-                justify="flex-start"
-                alignItems="flex-start"
+                spacing={3}
+                justify="center"
+                alignItems="center"
             >
                     {data.hits && data.hits.slice(0,12).map(item => (
-                        <Contact contact={item} />
+                        <Contact contact={item} key={item.name} />
                     ))}
             </Grid>
             </Container>
