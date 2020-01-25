@@ -9,6 +9,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
 import Contact from './Contact.js'
 import Grid from '@material-ui/core/Grid';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -62,26 +64,34 @@ const useStyles = makeStyles(theme => ({
 
 
 function ContactList() {
-
+    const dispatch = useDispatch();
     const classes = useStyles();
+    // const query = useSelector(state => state.query)
+    // useSelector(state => {
+    //    return state
+    // })
     const API_URL = 'http://private-05627-frontendnewhire.apiary-mock.com/contact_list'
-    const [data, setData] = useState({ hits: [] });
+    const [data, setData] = useState({ drivers: [] });
     useEffect(() => {
         getContacts()
     }, []);
     const getContacts = async () => {
         const result = await axios(API_URL);
-        setData({ hits: result.data });
+        setData({ drivers: result.data });
     }
     const handleChange = (e) => {
-        let filter = e.target.value.toLowerCase()
-        const filteredContacts = data.hits.filter(contact => {
-            let name = contact.name.toLowerCase()
-            let email = contact.email ? contact.email.toLowerCase(): ""
-            console.log(filter.indexOf(name) >= 0)
-            return name.indexOf(filter) >= 0 || email.indexOf(filter) >= 0
-        })
-        console.log(filteredContacts)
+        if (e.target.value && e.target.value.length > 0) {
+            dispatch({ type: "SET_QUERY", query: e.target.value })
+            let filter = e.target.value.toLowerCase()
+            const filteredContacts = data.drivers.filter(contact => {
+                let name = contact.name.toLowerCase()
+                let email = contact.email ? contact.email.toLowerCase() : ""
+                return name.indexOf(filter) >= 0 || email.indexOf(filter) >= 0
+            })
+            setData({ drivers: filteredContacts })
+        } else {
+            getContacts()
+        }
     }
     return (
         <div>
@@ -109,20 +119,21 @@ function ContactList() {
                 </AppBar>
             </div>
             <Container>
-            <Grid
-            style={{ marginTop: 50 }}
-                container
-                direction="row"
-                spacing={3}
-                justify="center"
-                alignItems="center"
-            >
-                    {data.hits && data.hits.slice(0,12).map(item => (
+                <Grid
+                    style={{ marginTop: 50 }}
+                    container
+                    direction="row"
+                    spacing={3}
+                    justify="center"
+                    alignItems="center"
+                >
+                    {data.drivers && data.drivers.slice(0, 12).map(item => (
                         <Contact contact={item} key={item.name} />
                     ))}
-            </Grid>
+                </Grid>
             </Container>
         </div>
     );
 }
+
 export default ContactList;
