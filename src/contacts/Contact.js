@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
+import citizen from '../assets/citizen.svg'
+import professional from '../assets/professional.svg'
 
 
 
@@ -20,14 +22,20 @@ const useStyles = makeStyles(theme => ({
     card: {
         maxWidth: 345,
     },
-    button: {
+
+    logo: {
         position: 'absolute',
-        bottom: 300,
-        right: 520,
+        zIndex: 1,
+        top: -5,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
     },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
+        position: 'relative'
+
     },
     expand: {
         marginLeft: 'auto',
@@ -47,11 +55,20 @@ export default function Contact({ contact }) {
     const handleExpandHover = () => {
         setExpanded(!expanded);
     };
+    let logo = contact.driverType.toLowerCase().trim()
+    const logoEl = () => {
+        if (logo === 'proffesional') {
+            return <img src={professional} class={classes.logo}
+                alt="logo" />
+        } else {
+            return <img src={citizen} class={classes.logo} alt="logo" />
+        }
+    }
 
     return (
         <Grid item xs={3}>
             <Card
-                className={clsx(classes.expand, classes.card)}
+                className={clsx(classes.card)}
                 onMouseEnter={handleExpandHover}
                 onMouseLeave={handleExpandHover}
                 aria-expanded={expanded}
@@ -59,12 +76,16 @@ export default function Contact({ contact }) {
             >
                 <CardMedia
                     className={classes.media}
+                    style={{ paddingTop: expanded ? '40.25%' : '56.25%' }}
                     image={contact.profile_image}
                     title="Paella dish"
                 />
-                {/* <Fab color="primary" className={classes.button} aria-label="add">
-      </Fab> */}
-                <CardContent>
+                {
+                    logoEl()
+                }
+
+                <CardContent className={clsx(classes.expand)}
+                >
                     <Typography variant="h5" color="textPrimary">
                         {contact.name}
                     </Typography>
