@@ -8,10 +8,9 @@ import { Provider } from 'react-redux';
 
 const initialState = {
     page: 1,
-    query: "test"
+    query: ""
 }
 function reducer(state = initialState, action) {
-    console.log('reducer', state, action);
     switch (action.type) {
         case 'SET_PAGE':
             return Object.assign({}, state, {
@@ -24,7 +23,6 @@ function reducer(state = initialState, action) {
         default:
             return state;
     }
-    return state;
 }
 
 const store = createStore(reducer);

@@ -9,9 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
 import Contact from './Contact.js'
 import Grid from '@material-ui/core/Grid';
-import { borders } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
-import { sizing } from '@material-ui/system';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
