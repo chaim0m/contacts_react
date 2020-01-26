@@ -9,6 +9,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
 import Contact from './Contact.js'
 import Grid from '@material-ui/core/Grid';
+import { borders } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
+import { sizing } from '@material-ui/system';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -93,7 +96,7 @@ function ContactList() {
     return (
         <div>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{ background: '#1fb7e9' }}>
                     <Toolbar>
                         <Typography className={classes.title} variant="h6" align="left" noWrap>
                             Contact List
@@ -102,20 +105,23 @@ function ContactList() {
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
                             </div>
+                            <Box borderRadius="50%">
                             <InputBase
                                 placeholder="Search…"
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
+                                style={{borderRadius: 50}}
                                 inputProps={{ 'aria-label': 'search' }}
                                 onChange={handleChange}
                             />
+                            </Box>  
                         </div>
                     </Toolbar>
                 </AppBar>
             </div>
-            <Container>
+          <Container>
                 <Grid
                     style={{ marginTop: 50 }}
                     container
