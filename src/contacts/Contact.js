@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     logo: {
         position: 'absolute',
         zIndex: 1,
-        top: -5,
-        left: 0,
+        top: 140,
+        left: -190,
         right: 0,
         margin: '0 auto',
     },
@@ -55,11 +55,11 @@ export default function Contact({ contact }) {
     const handleExpandHover = () => {
         setExpanded(!expanded);
     };
-    let logo = contact.driverType.toLowerCase().trim()
-    const logoEl = () => {
-        if (logo === 'proffesional') {
-            return <img src={professional} class={classes.logo}
-                alt="logo" />
+    const logoEl = (driverType) => {
+        let logo = driverType.toLowerCase().trim()
+        if (logo === "professional") {
+            return <img src={professional}
+            class={classes.logo}     alt="logo" />
         } else {
             return <img src={citizen} class={classes.logo} alt="logo" />
         }
@@ -73,15 +73,16 @@ export default function Contact({ contact }) {
                 onMouseLeave={handleExpandHover}
                 aria-expanded={expanded}
                 aria-label="show more"
+                style={{position: 'relative'}}
             >
                 <CardMedia
                     className={classes.media}
-                    style={{ paddingTop: expanded ? '40.25%' : '56.25%' }}
+                    style={{ paddingTop: expanded ? '38%' : '56.25%' }}
                     image={contact.profile_image}
                     title="Paella dish"
                 />
                 {
-                    logoEl()
+                    logoEl(contact.driverType)
                 }
 
                 <CardContent className={clsx(classes.expand)}
