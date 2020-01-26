@@ -31,11 +31,18 @@ const useStyles = makeStyles(theme => ({
         right: 0,
         margin: '0 auto',
     },
+    logoContracted: {
+        position: 'absolute',
+        zIndex: 1,
+        top: 90,
+        left: -190,
+        right: 0,
+        margin: '0 auto',
+    },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
         position: 'relative'
-
     },
     expand: {
         marginLeft: 'auto',
@@ -59,9 +66,9 @@ export default function Contact({ contact }) {
         let logo = driverType.toLowerCase().trim()
         if (logo === "professional") {
             return <img src={professional}
-            class={classes.logo}     alt="logo" />
+                class={expanded ? classes.logoContracted : classes.logo } alt="logo" />
         } else {
-            return <img src={citizen} class={classes.logo} alt="logo" />
+            return <img src={citizen} class={expanded ? classes.logoContracted : classes.logo} alt="logo" />
         }
     }
 
@@ -73,7 +80,7 @@ export default function Contact({ contact }) {
                 onMouseLeave={handleExpandHover}
                 aria-expanded={expanded}
                 aria-label="show more"
-                style={{position: 'relative'}}
+                style={{ position: 'relative' }}
             >
                 <CardMedia
                     className={classes.media}
