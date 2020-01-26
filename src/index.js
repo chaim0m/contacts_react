@@ -6,11 +6,11 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const state = {
+const initialState = {
     page: 1,
     query: "test"
 }
-function reducer(state, action) {
+function reducer(state = initialState, action) {
     console.log('reducer', state, action);
     switch (action.type) {
         case 'SET_PAGE':

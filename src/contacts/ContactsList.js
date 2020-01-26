@@ -66,10 +66,7 @@ const useStyles = makeStyles(theme => ({
 function ContactList() {
     const dispatch = useDispatch();
     const classes = useStyles();
-    // const query = useSelector(state => state.query)
-    // useSelector(state => {
-    //    return state
-    // })
+    const { query, page } = useSelector(state => state.query)
     const API_URL = 'http://private-05627-frontendnewhire.apiary-mock.com/contact_list'
     const [data, setData] = useState({ drivers: [] });
     useEffect(() => {
